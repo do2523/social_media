@@ -16,7 +16,7 @@ import { type AdapterAccount } from "next-auth/adapters";
  */
 export const createTable = sqliteTableCreator((name) => `social_media_${name}`);
 
-export const posts = createTable(
+/*export const posts = createTable(
   "post",
   {
     id: int("id", { mode: "number" }).primaryKey({ autoIncrement: true }),
@@ -36,6 +36,7 @@ export const posts = createTable(
     nameIndex: index("name_idx").on(example.name),
   })
 );
+*/
 
 export const users = createTable("user", {
   id: text("id", { length: 255 })
