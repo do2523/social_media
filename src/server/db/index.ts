@@ -1,6 +1,5 @@
-import { createClient, type Client } from "@libsql/client";
-import { drizzle } from "drizzle-orm/libsql";
-
+import { drizzle } from "drizzle-orm/node-postgres";
+import {Client} from "pg";
 import { env } from "~/env";
 import * as schema from "./schema";
 
@@ -8,12 +7,16 @@ import * as schema from "./schema";
  * Cache the database connection in development. This avoids creating a new connection on every HMR
  * update.
  */
-const globalForDb = globalThis as unknown as {
-  client: Client | undefined;
-};
+const client = new Client({
+	host:env.AZURE_DB_HOST,
+	port:5432,
+	user: env.AZURE_DB_USER,
+  	password: env.AZURE_DB_USER,
+  	database: "db_name",
 
-export const client =
-  globalForDb.client ?? createClient({ url: env.DATABASE_URL });
-if (env.NODE_ENV !== "production") globalForDb.client = client;
+})
 
-export const db = drizzle(client, { schema });
+await client.connect();
+export const db = drizzle(client);
+
+

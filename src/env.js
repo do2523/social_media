@@ -24,6 +24,9 @@ export const env = createEnv({
     ),
     DISCORD_CLIENT_ID: z.string(),
     DISCORD_CLIENT_SECRET: z.string(),
+	AZURE_DB_PASSWORD: z.string(),
+	AZURE_DB_USER: z.string(),
+	AZURE_DB_HOST: z.string()
   },
 
   /**
@@ -40,6 +43,9 @@ export const env = createEnv({
    * middlewares) or client-side so we need to destruct manually.
    */
   runtimeEnv: {
+	AZURE_DB_HOST: process.env.AZURE_DB_HOST,
+	AZURE_DB_USER: process.env.AZURE_DB_USER,
+	AZURE_DB_PASSWORD: process.env.AZURE_DB_PASSWORD,
     DATABASE_URL: process.env.DATABASE_URL,
     NODE_ENV: process.env.NODE_ENV,
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,

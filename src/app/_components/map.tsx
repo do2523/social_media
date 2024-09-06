@@ -1,4 +1,5 @@
 'use client';
+
 import * as React from "react";
 import { MapContainer,TileLayer,Marker,Popup} from "react-leaflet";
 import {Icon} from "leaflet";
@@ -31,7 +32,6 @@ export default function Map(){
     			</Popup >
   </Marker>
 			</MapContainer>
-
 		</div>
 	)
 }

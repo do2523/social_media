@@ -1,11 +1,14 @@
+import { time } from "console";
 import { relations, sql } from "drizzle-orm";
 import {
   index,
-  int,
+  varchar,
+  integer,
+  timestamp,
   primaryKey,
-  sqliteTableCreator,
+  pgTable,
   text,
-} from "drizzle-orm/sqlite-core";
+} from "drizzle-orm/pg-core";
 import { type AdapterAccount } from "next-auth/adapters";
 
 /**
@@ -14,7 +17,6 @@ import { type AdapterAccount } from "next-auth/adapters";
  *
  * @see https://orm.drizzle.team/docs/goodies#multi-project-schema
  */
-export const createTable = sqliteTableCreator((name) => `social_media_${name}`);
 
 /*export const posts = createTable(
   "post",
@@ -38,20 +40,17 @@ export const createTable = sqliteTableCreator((name) => `social_media_${name}`);
 );
 */
 
-export const users = createTable("user", {
-  id: text("id", { length: 255 })
+export const users = pgTable("user", {
+  id: varchar('id',{length: 256})
     .notNull()
     .primaryKey()
     .$defaultFn(() => crypto.randomUUID()),
-  name: text("name", { length: 255 }),
-  email: text("email", { length: 255 }).notNull(),
-  emailVerified: int("email_verified", {
-    mode: "timestamp",
-  }).default(sql`(unixepoch())`),
-  image: text("image", { length: 255 }),
+  name: varchar("name", { length: 255 }),
+  email: varchar("email", { length: 255 }).notNull(),
+  emailVerified: timestamp('emailVerified').default(sql`(unixepoch())`),
 });
 
-export const usersRelations = relations(users, ({ many }) => ({
+/*export const usersRelations = relations(users, ({ many }) => ({
   accounts: many(accounts),
 }));
 
@@ -114,4 +113,4 @@ export const verificationTokens = createTable(
   (vt) => ({
     compoundKey: primaryKey({ columns: [vt.identifier, vt.token] }),
   })
-);
+);*/

@@ -1,12 +1,14 @@
 import { type Config } from "drizzle-kit";
-
+import { url } from "inspector";
 import { env } from "~/env";
 
+
 export default {
-  schema: "./src/server/db/schema.ts",
-  dialect: "sqlite",
+  schema: "./db/schema.ts", // Your schema location
+  dialect: "postgresql",
+  out: "./drizzle", // Where our migrations will be outputted
+  driver: "pglite", // PostgreSQL driver
   dbCredentials: {
-    url: env.DATABASE_URL,
-  },
-  tablesFilter: ["social_media_*"],
+	url: env.AZURE_DB_HOST,
+  }
 } satisfies Config;
